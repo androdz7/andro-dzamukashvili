@@ -1,15 +1,16 @@
 import base.TestBase;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.FormPage;
 import utils.DriverFactory;
 
 import java.awt.*;
-import java.time.Duration;
 
 public class FormTests extends TestBase {
     @Test
+    @Description("Verify that form works correctly")
     public void test() {
         DriverFactory.getDriver().get("https://demoqa.com/automation-practice-form");
         FormPage form = new FormPage(DriverFactory.getDriver());

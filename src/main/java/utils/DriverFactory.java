@@ -2,25 +2,34 @@ package utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import java.time.Duration;
 
 public class DriverFactory {
-    private static WebDriver driver;
-
-    public static WebDriver getDriver() {
-        return driver;
-    }
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public static void initDriver() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+
+        WebDriver webDriver = new ChromeDriver(options);
+        webDriver.manage().window().maximize();
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+        driver.set(webDriver);
+    }
+
+    public static WebDriver getDriver() {
+        return driver.get();
     }
 
     public static void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove(); // CRITICAL: Prevents memory leaks
         }
     }
 }

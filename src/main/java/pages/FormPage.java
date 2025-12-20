@@ -246,7 +246,9 @@ public class FormPage extends BasePage {
 
     public boolean isAddressCorrect() {
         By actualAddress = By.className("table-responsive");
-        return getText(actualAddress).contains(expectedAddress);
+        return getText(actualAddress
+
+        ).contains(expectedAddress);
     }
 
     public boolean isStateCityCorrect() {

@@ -1,4 +1,5 @@
 import base.TestBase;
+import io.qameta.allure.Description;
 import org.openqa.selenium.Alert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -8,6 +9,7 @@ import java.awt.*;
 
 public class AlertTests extends TestBase {
     @Test
+    @Description("Verify that alert works correctly")
     public void test() throws InterruptedException, AWTException {
         DriverFactory.getDriver().get("https://demo.automationtesting.in/Alerts.html");
 
